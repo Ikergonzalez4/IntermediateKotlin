@@ -61,13 +61,18 @@ class MainActivity : AppCompatActivity() {
         val sumTwo = myInnerClass.sumTwo(10)
         println("El resultado de sumar dos es $sumTwo")
     }
-
     private fun classInheritance() {
 
-        val programmer = Programmer("iker", 19)
+        val person = Person("Sara", 40)
+
+        val programmer = Programmer("iker", 19, "Kotlin")
         programmer.work()
+        programmer.sayLanguage()
+        programmer.goToWork()
+        programmer.drive()
 
         val designer = Designer("isabella", 18)
         designer.work()
+        designer.goToWork()
     }
 }
