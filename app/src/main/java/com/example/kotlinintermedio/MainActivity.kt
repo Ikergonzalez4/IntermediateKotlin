@@ -2,6 +2,10 @@ package com.example.kotlinintermedio
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.concurrent.thread
+import kotlin.math.ln
 
 typealias MyMapList = MutableMap<Int, ArrayList<String>>
 typealias MyFun = (Int, String, MyMapList) -> Boolean
@@ -19,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         visibilityModifiers()
         dataClasses()
         typeAliases()
+        destructuringDeclarations()
+        extensions()
+        lambdas()
     }
 
     enum class Direction(val dir: Int) {
@@ -147,9 +154,91 @@ class MainActivity : AppCompatActivity() {
         myNewMap[2] = arrayListOf("ikergonzalez", "by ikergonzalez")
 
         myMap = myNewMap
-
-
-
     }
 
+    private fun destructuringDeclarations() {
+
+        //var iker = Worker("iker", 19, "Programador")
+        val (name, age, work) = Worker("iker", 19, "Programador")
+        println("$name ,$age, $work")
+
+        /*val (name, _, work) = Worker("iker", 19, "Programador") "_" para ver name y work sin age
+        println("$name, $work")*/
+
+        val ikergonzalez = Worker("ikergonzalez", 20, "Programador")
+        println(ikergonzalez.component1())
+
+        val (ikerName, ikerAge, ikerWork) = myWorker()
+        println("$ikerName, $ikerAge, $ikerWork")
+
+        val myMap = mapOf(1 to "iker", 2 to "ana", 3 to "sara")
+        for ((id, name) in myMap) {
+            println("$id, $name")
+        }
+    }
+
+    private fun myWorker(): Worker {
+        return Worker("iker", 19, "Programador")
+    }
+
+    private fun extensions() {
+
+        val myDate = Date()
+        println(myDate.customFormat())
+        println(myDate.formatSize)
+
+
+        var myDateNullable: Date? = null
+        println(myDateNullable.customFormat())
+        println(myDateNullable.formatSize)
+    }
+
+    private fun lambdas() {
+
+        val myIntList = arrayListOf(0,1,2,3,4,5,6,7,8,9,10)
+        val myFilterIntList = myIntList.filter {myInt ->
+
+            print(myInt)
+            if (myInt == 1) {
+                return@filter true
+            }
+
+            myInt > 5
+        }
+        print(myFilterIntList)
+
+        val mySumFun = fun (x: Int, y: Int): Int = x + y // simplificamos la funcion y olvida return
+        val myMultFun = fun (x: Int, y: Int): Int = x * y
+
+        println(myOperateFun(5, 10, mySumFun))
+        println(myOperateFun(5, 10, myMultFun))
+        println(myOperateFun(5, 10) { x, y -> x - y })
+
+        myAsincFun("iker") {
+            println(it)
+        }
+    }
+
+    private fun myOperateFun(x: Int, y: Int, myFun: (Int, Int) -> Int): Int {
+        return myFun(x,y)
+    }
+
+    private fun myAsincFun(name: String, hello: (String) -> Unit) {
+
+        val myNewString = "Hello $name!"
+        hello(myNewString)
+
+        thread {
+            Thread.sleep(1000)
+            hello(myNewString)
+        }
+        thread {
+            Thread.sleep(5000)
+            hello(myNewString)
+        }
+        thread {
+            Thread.sleep(7000)
+            hello(myNewString)
+        }
+    }
 }
