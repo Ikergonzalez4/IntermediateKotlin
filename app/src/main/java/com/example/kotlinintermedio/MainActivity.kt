@@ -11,8 +11,8 @@ class MainActivity : AppCompatActivity() {
         enumClasses()
         nestedAndInnerClasses()
         classInheritance()
-
         interfaces()
+        visibilityModifiers()
     }
 
     enum class Direction(val dir: Int) {
@@ -83,5 +83,14 @@ class MainActivity : AppCompatActivity() {
         val gamer = Person("Iker", 19)
         gamer.play()
         gamer.stream()
+    }
+
+    private fun visibilityModifiers() {
+
+        //val visibility = Visibility()
+        //visibility.name = "Iker"
+        //visibility.sayMyName()
+
+        val visibilityTwo = VisibilityTwo()
     }
 }
